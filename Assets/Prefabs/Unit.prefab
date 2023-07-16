@@ -49,6 +49,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unitAnimator: {fileID: 341040255401816688}
+  moveAction: {fileID: 2163908718565304797}
 --- !u!65 &6417563082802523684
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -74,6 +75,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e260a7892a5186a408dfe1d18d90830b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  unitAnimator: {fileID: 341040255401816688}
 --- !u!1 &6916946587706452062
 GameObject:
   m_ObjectHideFlags: 0
