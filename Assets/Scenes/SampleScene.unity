@@ -871,7 +871,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unit: {fileID: 957329838}
-  gridSystemVisual: {fileID: 807919555}
 --- !u!4 &1081839329
 Transform:
   m_ObjectHideFlags: 0
@@ -1287,11 +1286,6 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2163908718565304797, guid: 1526fb71595c2074b9022069578cef16,
-        type: 3}
-      propertyPath: maxMoveDistance
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 6183736854406308398, guid: 1526fb71595c2074b9022069578cef16,
         type: 3}
       propertyPath: m_RootOrder

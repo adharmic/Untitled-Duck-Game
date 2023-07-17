@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6183736854406308397}
   - component: {fileID: 6417563082802523684}
   - component: {fileID: 2163908718565304797}
+  - component: {fileID: 957329842}
   m_Layer: 7
   m_Name: Unit
   m_TagString: Untagged
@@ -34,7 +35,7 @@ Transform:
   - {fileID: 5934533311306704906}
   - {fileID: 537778508410550509}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6183736854406308397
 MonoBehaviour:
@@ -48,8 +49,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ba374a5551066144857e06a26fc800d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitAnimator: {fileID: 341040255401816688}
-  moveAction: {fileID: 2163908718565304797}
 --- !u!65 &6417563082802523684
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -76,6 +75,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unitAnimator: {fileID: 341040255401816688}
+  maxMoveDistance: 4
+--- !u!114 &957329842
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6183736854406308399}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fdca55615409c04381a77cb7d9dafd7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6916946587706452062
 GameObject:
   m_ObjectHideFlags: 0

@@ -2,33 +2,37 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MoveAction : MonoBehaviour
+public class MoveAction : BaseAction
 {
     [SerializeField] private Animator unitAnimator;
     [SerializeField] private int maxMoveDistance = 4;
     private Vector3 targetPosition;
-    private Unit unit;
-    private void Awake() {
+    protected override void Awake() {
+        base.Awake();
         targetPosition = transform.position;
-        unit = GetComponent<Unit>();
     }
     public void Move(GridPosition targetPosition) {
+        isActive = true;
         this.targetPosition = LevelGrid.Instance.GetWorldPosition(targetPosition);
     }
     private void Update() {
-        
-        unitAnimator.SetBool("isWalking", false);
-
+        if (!isActive) {
+            return;
+        }
+        Vector3 moveDirection = (targetPosition - transform.position).normalized;
         float stoppingDistance = .1f;
         if (Vector3.Distance(transform.position, targetPosition) >= stoppingDistance) {
             unitAnimator.SetBool("isWalking", true);
-            Vector3 moveDirection = (targetPosition - transform.position).normalized;
             float moveSpeed = 4f;
             transform.position += moveDirection * Time.deltaTime * moveSpeed;
-
-            float rotateSpeed = 10f;
-            transform.forward = Vector3.Lerp(transform.forward, moveDirection, Time.deltaTime * rotateSpeed);
         }
+        else {
+            unitAnimator.SetBool("isWalking", false);
+            isActive = false;
+        }
+        
+        float rotateSpeed = 10f;
+        transform.forward = Vector3.Lerp(transform.forward, moveDirection, Time.deltaTime * rotateSpeed);
     }
 
     public bool IsValidActionGridPosition(GridPosition gridPosition) {
@@ -57,7 +61,6 @@ public class MoveAction : MonoBehaviour
                 }
 
                 validGridPositionList.Add(testGridPosition);
-                Debug.Log(testGridPosition);
             }
         }
         return validGridPositionList;

@@ -5,11 +5,13 @@ using UnityEngine;
 public class Unit : MonoBehaviour
 {
     private MoveAction moveAction;
+    private SpinAction spinAction;
     private Vector3 targetPosition;
     private GridPosition gridPosition;
 
     private void Awake() {
         moveAction = GetComponent<MoveAction>();
+        spinAction = GetComponent<SpinAction>();
     }
     private void Start() {
         gridPosition = LevelGrid.Instance.GetGridPosition(transform.position);
@@ -27,6 +29,10 @@ public class Unit : MonoBehaviour
 
     public MoveAction GetMoveAction() {
         return moveAction;
+    }
+    
+    public SpinAction GetSpinAction() {
+        return spinAction;
     }
     
     public GridPosition GetGridPosition() {
