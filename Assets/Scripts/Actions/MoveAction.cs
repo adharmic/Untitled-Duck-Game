@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,7 +12,8 @@ public class MoveAction : BaseAction
         base.Awake();
         targetPosition = transform.position;
     }
-    public void Move(GridPosition targetPosition) {
+    public void Move(GridPosition targetPosition, Action onActionComplete) {
+        this.onActionComplete = onActionComplete;
         isActive = true;
         this.targetPosition = LevelGrid.Instance.GetWorldPosition(targetPosition);
     }
@@ -27,6 +29,7 @@ public class MoveAction : BaseAction
             transform.position += moveDirection * Time.deltaTime * moveSpeed;
         }
         else {
+            onActionComplete();
             unitAnimator.SetBool("isWalking", false);
             isActive = false;
         }
