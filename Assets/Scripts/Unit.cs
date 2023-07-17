@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class Unit : MonoBehaviour
 {
-    [SerializeField] private Animator unitAnimator;
-    [SerializeField] private MoveAction moveAction;
+    private MoveAction moveAction;
     private Vector3 targetPosition;
     private GridPosition gridPosition;
 
+    private void Awake() {
+        moveAction = GetComponent<MoveAction>();
+    }
     private void Start() {
         gridPosition = LevelGrid.Instance.GetGridPosition(transform.position);
         LevelGrid.Instance.AddUnitAtGridPosition(gridPosition, this);
