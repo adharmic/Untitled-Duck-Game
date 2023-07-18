@@ -13,8 +13,7 @@ public class MoveAction : BaseAction
         targetPosition = transform.position;
     }
     public override void TakeAction(GridPosition targetPosition, Action onActionComplete) {
-        this.onActionComplete = onActionComplete;
-        isActive = true;
+        ActionStart(onActionComplete);
         this.targetPosition = LevelGrid.Instance.GetWorldPosition(targetPosition);
     }
     private void Update() {
@@ -29,9 +28,8 @@ public class MoveAction : BaseAction
             transform.position += moveDirection * Time.deltaTime * moveSpeed;
         }
         else {
-            onActionComplete();
+            ActionComplete();
             unitAnimator.SetBool("isWalking", false);
-            isActive = false;
         }
         
         float rotateSpeed = 10f;

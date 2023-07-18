@@ -14,13 +14,11 @@ public class SpinAction : BaseAction
         transform.eulerAngles += new Vector3(0, spinAddAmount, 0);
         totalSpinAmount += spinAddAmount;
         if(totalSpinAmount >= 360f) {
-            isActive = false;
-            onActionComplete();
+            ActionComplete();
         }
     }
     public override void TakeAction(GridPosition gridPosition, Action onSpinComplete) {
-        this.onActionComplete = onSpinComplete;
-        isActive = true;
+        ActionStart(onSpinComplete);
         totalSpinAmount = 0f;
     }
 
