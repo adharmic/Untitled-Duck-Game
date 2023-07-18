@@ -12,10 +12,20 @@ public class ShootAction : BaseAction
         Cooldown
     }
     private State state;
+    public event EventHandler<OnShootEventArgs> OnShoot;
+
+    public class OnShootEventArgs : EventArgs {
+        public Unit targetUnit;
+        public Unit shootingUnit;
+    }
     private int maxShootDistance = 4;
     private float stateTimer;
     private Unit targetUnit;
     private bool canShootBullet;
+    [SerializeField] private FireProjectileEvent fireProjectileEvent;
+    private void Start() {
+        fireProjectileEvent.OnFireProjectile += FireProjectileEvent_OnFireProjectile;
+    }
     private void Update() {
         if (!isActive) {
             return;
@@ -78,7 +88,7 @@ public class ShootAction : BaseAction
                     continue;
                 }
 
-                if (!IsOnCircle(testGridPosition, unitGridPosition)) {
+                if (!IsInShootingRange(testGridPosition, unitGridPosition)) {
                     continue;
                 }
 
@@ -98,7 +108,7 @@ public class ShootAction : BaseAction
     }
 
     private void Shoot() {
-        targetUnit.Damage();
+        OnShoot?.Invoke(this, new OnShootEventArgs{targetUnit = targetUnit, shootingUnit = unit});
     }
 
     private void Aim() {
@@ -107,7 +117,7 @@ public class ShootAction : BaseAction
         transform.forward = Vector3.Lerp(transform.forward, aimDirection, Time.deltaTime * rotateSpeed);
     }
 
-    private bool IsOnCircle(GridPosition point, GridPosition center) {
+    private bool IsInShootingRange(GridPosition point, GridPosition center) {
         int distanceX = center.x - point.x;
         int distanceZ = center.z - point.z;
 
@@ -128,5 +138,11 @@ public class ShootAction : BaseAction
         stateTimer = aimingTime;
 
         canShootBullet = true;
+    }
+
+    
+
+    private void FireProjectileEvent_OnFireProjectile(object sender, EventArgs e) {
+        targetUnit.Damage();
     }
 }
