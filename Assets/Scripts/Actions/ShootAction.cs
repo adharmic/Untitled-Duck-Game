@@ -143,6 +143,8 @@ public class ShootAction : BaseAction
     
 
     private void FireProjectileEvent_OnFireProjectile(object sender, EventArgs e) {
-        targetUnit.Damage();
+        if (targetUnit) {
+            targetUnit.Damage(13);
+        }
     }
 }
