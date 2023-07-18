@@ -7,6 +7,7 @@ public class Unit : MonoBehaviour
 {
     private const int ACTION_POINTS_MAX = 2;
     public static event EventHandler OnAnyActionPointsChanged;
+    [SerializeField] private bool isEnemy;
     private MoveAction moveAction;
     private SpinAction spinAction;
     private Vector3 targetPosition;
@@ -71,7 +72,13 @@ public class Unit : MonoBehaviour
     }
 
     private void TurnSystem_OnTurnChanged(object sender, EventArgs e) {
-        actionPoints = ACTION_POINTS_MAX;
-        OnAnyActionPointsChanged?.Invoke(this, EventArgs.Empty);
+        if ((IsEnemy() && !TurnSystem.Instance.IsPlayerTurn()) || (!IsEnemy() && TurnSystem.Instance.IsPlayerTurn())) {
+            actionPoints = ACTION_POINTS_MAX;
+            OnAnyActionPointsChanged?.Invoke(this, EventArgs.Empty);
+        }
+    }
+
+    public bool IsEnemy() {
+        return isEnemy;
     }
 }
