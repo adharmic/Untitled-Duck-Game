@@ -20,6 +20,12 @@ public class UnitAnimator : MonoBehaviour
             shootAction.OnShoot += ShootAction_OnShoot;
             fireProjectileEvent.OnFireProjectile += FireProjectileEvent_OnFireProjectile;
         }
+        if (TryGetComponent<HealthSystem>(out HealthSystem healthSystem)) {
+            healthSystem.OnDead += HealthSystem_OnDeath;
+        }
+        if (TryGetComponent<Unit>(out Unit unit)) {
+            unit.OnDamage += Unit_OnDamage;
+        }
 
     }
     
@@ -47,5 +53,14 @@ public class UnitAnimator : MonoBehaviour
 
     private void FireProjectileEvent_OnFireProjectile(object sender, EventArgs e) {
         SpawnProjectile();
+    }
+
+    private void HealthSystem_OnDeath(object sender, EventArgs e) {
+        animator.SetTrigger("Exit");
+        animator.SetTrigger("Die");
+    }
+    
+    private void Unit_OnDamage(object sender, EventArgs e) {
+        animator.SetTrigger("Hurt");
     }
 }

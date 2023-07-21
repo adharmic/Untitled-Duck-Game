@@ -7,6 +7,7 @@ public class Unit : MonoBehaviour
 {
     private const int ACTION_POINTS_MAX = 2;
     public static event EventHandler OnAnyActionPointsChanged;
+    public event EventHandler OnDamage;
     [SerializeField] private bool isEnemy;
     private MoveAction moveAction;
     private SpinAction spinAction;
@@ -87,6 +88,7 @@ public class Unit : MonoBehaviour
 
     public void Damage(int damageAmount) {
         healthSystem.Damage(damageAmount);
+        OnDamage?.Invoke(this, EventArgs.Empty);
     }
 
     public Vector3  GetWorldPosition() {
@@ -95,6 +97,9 @@ public class Unit : MonoBehaviour
 
     private void HealthSystem_OnDead(object sender, EventArgs e) {
         LevelGrid.Instance.RemoveUnitAtGridPosition(gridPosition, this);
+    }
+
+    public void RemoveUnit() {
         Destroy(gameObject);
     }
 }
