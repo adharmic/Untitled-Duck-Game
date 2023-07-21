@@ -18,6 +18,8 @@ public class ShootAction : BaseAction
         public Unit targetUnit;
         public Unit shootingUnit;
     }
+    [SerializeField] private float shootingTime = .1f;
+    [SerializeField] private float cooldownTime = .5f;
     private int maxShootDistance = 4;
     private float stateTimer;
     private Unit targetUnit;
@@ -56,12 +58,10 @@ public class ShootAction : BaseAction
         switch (state) {
             case State.Aiming:
                 state = State.Shooting;
-                float shootingTime = 0.1f;
                 stateTimer = shootingTime;
                 break;
             case State.Shooting:
                 state = State.Cooldown;
-                float cooldownTime = 0.5f;
                 stateTimer = cooldownTime;
                 break;
             case State.Cooldown:
@@ -129,8 +129,6 @@ public class ShootAction : BaseAction
 
     public override void TakeAction(GridPosition gridPosition, Action onActionComplete)
     {
-        ActionStart(onActionComplete);
-
         targetUnit = LevelGrid.Instance.GetUnitAtGridPosition(gridPosition);
 
         state = State.Aiming;
@@ -138,6 +136,7 @@ public class ShootAction : BaseAction
         stateTimer = aimingTime;
 
         canShootBullet = true;
+        ActionStart(onActionComplete);
     }
 
     
@@ -146,5 +145,9 @@ public class ShootAction : BaseAction
         if (targetUnit) {
             targetUnit.Damage(13);
         }
+    }
+
+    public Unit GetTargetUnit() {
+        return targetUnit;
     }
 }
