@@ -16,6 +16,7 @@ public class Unit : MonoBehaviour
     private BaseAction[] baseActionArray;
     private int actionPoints = ACTION_POINTS_MAX;
     private HealthSystem healthSystem;
+    [SerializeField] private GameObject worldUI;
     private void Awake() {
         moveAction = GetComponent<MoveAction>();
         spinAction = GetComponent<SpinAction>();
@@ -97,6 +98,7 @@ public class Unit : MonoBehaviour
 
     private void HealthSystem_OnDead(object sender, EventArgs e) {
         LevelGrid.Instance.RemoveUnitAtGridPosition(gridPosition, this);
+        worldUI.SetActive(false);
     }
 
     public void RemoveUnit() {

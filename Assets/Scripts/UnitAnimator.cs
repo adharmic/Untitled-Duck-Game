@@ -56,7 +56,6 @@ public class UnitAnimator : MonoBehaviour
     }
 
     private void HealthSystem_OnDeath(object sender, EventArgs e) {
-        animator.SetTrigger("Exit");
         animator.SetTrigger("Die");
     }
     

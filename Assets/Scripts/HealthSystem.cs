@@ -5,8 +5,13 @@ using UnityEngine;
 
 public class HealthSystem : MonoBehaviour
 {
+    private int healthMax;
     [SerializeField] private int health = 100;
     public event EventHandler OnDead;
+
+    private void Awake() {
+        healthMax = health;
+    }
 
     public void Damage(int damageAmount) {
         health -= damageAmount;
@@ -24,5 +29,9 @@ public class HealthSystem : MonoBehaviour
 
     private void Die() {
         OnDead?.Invoke(this, EventArgs.Empty);
+    }
+
+    public float GetHealthNormalized() {
+        return (float) health / healthMax;
     }
 }
