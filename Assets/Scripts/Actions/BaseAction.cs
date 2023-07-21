@@ -45,6 +45,17 @@ public abstract class BaseAction : MonoBehaviour
 
         OnAnyActionCompleted?.Invoke(this, EventArgs.Empty);
     }
+    
+
+    public static bool IsInRange(GridPosition point, GridPosition center, int range) {
+        int distanceX = center.x - point.x;
+        int distanceZ = center.z - point.z;
+
+        float distanceSquared = distanceX * distanceX + distanceZ * distanceZ;
+
+        float radiusOffset = range + 0.5f;
+        return distanceSquared <= radiusOffset * radiusOffset;
+    }
 
     public Unit GetUnit() {
         return unit;

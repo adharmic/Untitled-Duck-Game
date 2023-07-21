@@ -20,7 +20,7 @@ public class ShootAction : BaseAction
     }
     [SerializeField] private float shootingTime = .1f;
     [SerializeField] private float cooldownTime = .5f;
-    private int maxShootDistance = 4;
+    [SerializeField] private int maxShootDistance = 4;
     private float stateTimer;
     private Unit targetUnit;
     private bool canShootBullet;
@@ -88,7 +88,7 @@ public class ShootAction : BaseAction
                     continue;
                 }
 
-                if (!IsInShootingRange(testGridPosition, unitGridPosition)) {
+                if (!IsInRange(testGridPosition, unitGridPosition, maxShootDistance)) {
                     continue;
                 }
 
@@ -117,16 +117,6 @@ public class ShootAction : BaseAction
         transform.forward = Vector3.Lerp(transform.forward, aimDirection, Time.deltaTime * rotateSpeed);
     }
 
-    private bool IsInShootingRange(GridPosition point, GridPosition center) {
-        int distanceX = center.x - point.x;
-        int distanceZ = center.z - point.z;
-
-        float distanceSquared = distanceX * distanceX + distanceZ * distanceZ;
-
-        float radiusOffset = maxShootDistance + 0.5f;
-        return distanceSquared <= radiusOffset * radiusOffset;
-    }
-
     public override void TakeAction(GridPosition gridPosition, Action onActionComplete)
     {
         targetUnit = LevelGrid.Instance.GetUnitAtGridPosition(gridPosition);
@@ -149,5 +139,9 @@ public class ShootAction : BaseAction
 
     public Unit GetTargetUnit() {
         return targetUnit;
+    }
+
+    public int GetMaxShootDistance() {
+        return maxShootDistance;
     }
 }
