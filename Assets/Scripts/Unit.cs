@@ -12,9 +12,6 @@ public class Unit : MonoBehaviour
 
     public event EventHandler OnDamage;
     [SerializeField] private bool isEnemy;
-    private MoveAction moveAction;
-    private SpinAction spinAction;
-    private ShootAction shootAction;
     private Vector3 targetPosition;
     private GridPosition gridPosition;
     private BaseAction[] baseActionArray;
@@ -22,9 +19,6 @@ public class Unit : MonoBehaviour
     private HealthSystem healthSystem;
     [SerializeField] private GameObject worldUI;
     private void Awake() {
-        moveAction = GetComponent<MoveAction>();
-        spinAction = GetComponent<SpinAction>();
-        shootAction = GetComponent<ShootAction>();
         baseActionArray = GetComponents<BaseAction>();
         healthSystem = GetComponent<HealthSystem>();
     }
@@ -46,17 +40,6 @@ public class Unit : MonoBehaviour
             LevelGrid.Instance.UnitChangedGridPosition(this, oldGridPosition, newGridPosition);
         }
     }
-
-    public MoveAction GetMoveAction() {
-        return moveAction;
-    }
-    
-    public SpinAction GetSpinAction() {
-        return spinAction;
-    }
-    public ShootAction GetShootAction() {
-        return shootAction;
-    }
     
     public GridPosition GetGridPosition() {
         return gridPosition;
@@ -76,7 +59,16 @@ public class Unit : MonoBehaviour
 
     public bool CanSpendActionPointsToTakeAction(BaseAction baseAction) {
         return actionPoints >= baseAction.GetActionPointsCost();
-    }    
+    }   
+
+    public T GetAction<T>() where T : BaseAction {
+        foreach(BaseAction baseAction in baseActionArray) {
+            if (baseAction is T) {
+                return (T) baseAction;
+            }
+        }
+        return null;
+    } 
 
     private void SpendActionPoints(int amount) {
         actionPoints -= amount;
