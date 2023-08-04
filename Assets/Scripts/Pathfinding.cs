@@ -30,7 +30,7 @@ public class Pathfinding : MonoBehaviour
         this.cellSize = cellSize;
 
         gridSystem = new GridSystem<PathNode>(width, height, cellSize, (GridSystem<PathNode> g, GridPosition gridPosition) => new PathNode(gridPosition));
-        gridSystem.CreateDebugObjects(gridDebugObjectPrefab);
+        // gridSystem.CreateDebugObjects(gridDebugObjectPrefab);
 
         for (int x = 0; x < width; x++) {
             for (int z = 0; z < height; z++) {
@@ -54,7 +54,7 @@ public class Pathfinding : MonoBehaviour
 
         for (int x = 0; x < gridSystem.GetWidth(); x++) {
             for (int z = 0; z < gridSystem.GetHeight(); z++) {
-                GridPosition gridPosition = new GridPosition(x, z);
+                GridPosition gridPosition = new(x, z);
                 PathNode pathNode = gridSystem.GetGridObject(gridPosition);
 
                 pathNode.SetGCost(int.MaxValue);
@@ -107,7 +107,6 @@ public class Pathfinding : MonoBehaviour
 
     public int CalculateDistance(GridPosition gridPositionA, GridPosition gridPositionB) {
         GridPosition gridPositionDistance = gridPositionA - gridPositionB;
-        int distance = Mathf.Abs(gridPositionDistance.x) + Mathf.Abs(gridPositionDistance.z);
         int xDistance = Mathf.Abs(gridPositionDistance.x);
         int zDistance = Mathf.Abs(gridPositionDistance.z);
         int remaining = Mathf.Abs(xDistance - zDistance);
@@ -125,23 +124,24 @@ public class Pathfinding : MonoBehaviour
     }
 
     private List<PathNode> GetNeighborList(PathNode currentNode) {
-        List<PathNode> neighborList = new List<PathNode>();
+        List<PathNode> neighborList = new();
 
         GridPosition gridPosition = currentNode.GetGridPosition();
 
-        // Determine if you want diagonal movement - playtest
-        for (int x = -1; x <= 1; x++) {
-            for (int z = -1; z <= 1; z++) {
-                if (x == 0 && z == 0) {
-                    // Current node
-                    continue;
-                }
-                GridPosition testGridPosition = new GridPosition(gridPosition.x + x, gridPosition.z + z);
-                if (!gridSystem.IsValidGridPosition(testGridPosition)) {
-                    continue;
-                }
-                neighborList.Add(GetNode(testGridPosition));
-            }
+        if(gridSystem.IsValidGridPosition(gridPosition.North())) {
+            neighborList.Add(gridSystem.GetGridObject(gridPosition.North()));
+        }
+        
+        if(gridSystem.IsValidGridPosition(gridPosition.South())) {
+            neighborList.Add(gridSystem.GetGridObject(gridPosition.South()));
+        }
+        
+        if(gridSystem.IsValidGridPosition(gridPosition.East())) {
+            neighborList.Add(gridSystem.GetGridObject(gridPosition.East()));
+        }
+        
+        if(gridSystem.IsValidGridPosition(gridPosition.West())) {
+            neighborList.Add(gridSystem.GetGridObject(gridPosition.West()));
         }
 
         return neighborList;
@@ -152,8 +152,7 @@ public class Pathfinding : MonoBehaviour
     }
     
     private List<GridPosition> CalculatePath(PathNode endNode) {
-        List<PathNode> pathNodeList = new List<PathNode>();
-        pathNodeList.Add(endNode);
+        List<PathNode> pathNodeList = new() {endNode};
         PathNode currentNode = endNode;
         while (currentNode.GetPreviousNode() != null) {
             pathNodeList.Add(currentNode.GetPreviousNode());
@@ -161,7 +160,7 @@ public class Pathfinding : MonoBehaviour
         }
         pathNodeList.Reverse();
 
-        List<GridPosition> gridPositionList = new List<GridPosition>();
+        List<GridPosition> gridPositionList = new();
         foreach (PathNode pathNode in pathNodeList) {
             gridPositionList.Add(pathNode.GetGridPosition());
         }

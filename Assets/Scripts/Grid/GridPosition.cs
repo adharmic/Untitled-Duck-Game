@@ -45,4 +45,20 @@ public struct GridPosition : IEquatable<GridPosition> {
     public static GridPosition operator -(GridPosition a, GridPosition b) {
         return new GridPosition(a.x - b.x, a.z - b.z);
     }
+
+    public GridPosition North() {
+        return this + new GridPosition(0, 1);
+    }
+    
+    public GridPosition South() {
+        return this + new GridPosition(0, -1);
+    }
+    
+    public GridPosition East() {
+        return this + new GridPosition(1, 0);
+    }
+    
+    public GridPosition West() {
+        return this + new GridPosition(-1, 0);
+    }
 }
