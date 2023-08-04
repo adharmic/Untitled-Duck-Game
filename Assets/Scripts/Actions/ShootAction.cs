@@ -108,6 +108,7 @@ public class ShootAction : BaseAction
                     continue;
                 }
 
+                // TODO: Extract this code to Unit script to check if a unit can see another unit
                 float unitShoulderHeight = 1.7f;
                 Vector3 unitWorldPosition = LevelGrid.Instance.GetWorldPosition(unitGridPosition);
                 Vector3 shootDirection = (targetUnit.GetWorldPosition() - unitWorldPosition).normalized;
