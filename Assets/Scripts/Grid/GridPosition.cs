@@ -9,7 +9,7 @@ public struct GridPosition : IEquatable<GridPosition> {
         this.z = z;
     }
 
-    public override string ToString()
+    public override readonly string ToString()
     {
         return "x: " + x + "; z: " + z;
     }
@@ -22,19 +22,19 @@ public struct GridPosition : IEquatable<GridPosition> {
         return !(a == b);
     }
 
-    public override bool Equals(object obj)
+    public override readonly bool Equals(object obj)
     {
         return obj is GridPosition position &&
                x == position.x &&
                z == position.z;
     }
 
-    public override int GetHashCode()
+    public override readonly int GetHashCode()
     {
         return HashCode.Combine(x, z);
     }
 
-    public bool Equals(GridPosition other)
+    public readonly bool Equals(GridPosition other)
     {
         return this == other;
     }
@@ -46,19 +46,19 @@ public struct GridPosition : IEquatable<GridPosition> {
         return new GridPosition(a.x - b.x, a.z - b.z);
     }
 
-    public GridPosition North() {
+    public readonly GridPosition North() {
         return this + new GridPosition(0, 1);
     }
     
-    public GridPosition South() {
+    public readonly GridPosition South() {
         return this + new GridPosition(0, -1);
     }
     
-    public GridPosition East() {
+    public readonly GridPosition East() {
         return this + new GridPosition(1, 0);
     }
     
-    public GridPosition West() {
+    public readonly GridPosition West() {
         return this + new GridPosition(-1, 0);
     }
 }

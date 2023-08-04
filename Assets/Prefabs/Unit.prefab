@@ -524,6 +524,9 @@ MonoBehaviour:
   shootingTime: 0.1
   cooldownTime: 1.2
   maxShootDistance: 4
+  obstaclesLayerMask:
+    serializedVersion: 2
+    m_Bits: 256
   fireProjectileEvent: {fileID: 5060115028425110519}
 --- !u!114 &8198392110458172879
 MonoBehaviour:

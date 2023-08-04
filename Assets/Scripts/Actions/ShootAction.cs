@@ -21,6 +21,7 @@ public class ShootAction : BaseAction
     [SerializeField] private float shootingTime = .1f;
     [SerializeField] private float cooldownTime = .5f;
     [SerializeField] private int maxShootDistance = 4;
+    [SerializeField] private LayerMask obstaclesLayerMask;
     private float stateTimer;
     private Unit targetUnit;
     private bool canShootBullet;
@@ -104,6 +105,13 @@ public class ShootAction : BaseAction
 
                 Unit targetUnit = LevelGrid.Instance.GetUnitAtGridPosition(testGridPosition);
                 if (targetUnit.IsEnemy() == unit.IsEnemy()) {
+                    continue;
+                }
+
+                float unitShoulderHeight = 1.7f;
+                Vector3 unitWorldPosition = LevelGrid.Instance.GetWorldPosition(unitGridPosition);
+                Vector3 shootDirection = (targetUnit.GetWorldPosition() - unitWorldPosition).normalized;
+                if (Physics.Raycast(unitWorldPosition + Vector3.up * unitShoulderHeight, shootDirection, Vector3.Distance(unitWorldPosition, targetUnit.GetWorldPosition()), obstaclesLayerMask)) {
                     continue;
                 }
 
