@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Unit : MonoBehaviour
 {
-    private const int ACTION_POINTS_MAX = 2;
+    [SerializeField] private const int ACTION_POINTS_MAX = 2;
     public static event EventHandler OnAnyActionPointsChanged;
     public static event EventHandler OnAnyUnitSpawned;
     public static event EventHandler OnAnyUnitDead;
@@ -15,7 +15,7 @@ public class Unit : MonoBehaviour
     private Vector3 targetPosition;
     private GridPosition gridPosition;
     private BaseAction[] baseActionArray;
-    private int actionPoints = ACTION_POINTS_MAX;
+    [SerializeField] private int actionPoints = ACTION_POINTS_MAX;
     private HealthSystem healthSystem;
     [SerializeField] private GameObject worldUI;
     private void Awake() {
@@ -63,8 +63,8 @@ public class Unit : MonoBehaviour
 
     public T GetAction<T>() where T : BaseAction {
         foreach(BaseAction baseAction in baseActionArray) {
-            if (baseAction is T) {
-                return (T) baseAction;
+            if (baseAction is T t) {
+                return t;
             }
         }
         return null;
