@@ -416,7 +416,6 @@ GameObject:
   - component: {fileID: 2163908718565304797}
   - component: {fileID: -7442327516176343872}
   - component: {fileID: 957329842}
-  - component: {fileID: 1641054692103514525}
   - component: {fileID: -4248909363589912058}
   - component: {fileID: 8198392110458172879}
   m_Layer: 7
@@ -512,25 +511,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7fdca55615409c04381a77cb7d9dafd7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1641054692103514525
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6183736854406308399}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 808562c07a910854799366742b4f0824, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shootingTime: 0.1
-  cooldownTime: 1.2
-  maxShootDistance: 4
-  obstaclesLayerMask:
-    serializedVersion: 2
-    m_Bits: 256
-  fireProjectileEvent: {fileID: 1909070869203560401}
 --- !u!114 &-4248909363589912058
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -546,6 +526,12 @@ MonoBehaviour:
   cannonProjectilePrefab: {fileID: 3371870235327827482, guid: 27f90cf18965a684484cf2029a41c94d,
     type: 3}
   shootPoint: {fileID: 151221003246401970}
+  maxShootDistance: 3
+  shootingTime: 0.1
+  cooldownTime: 0.5
+  obstaclesLayerMask:
+    serializedVersion: 2
+    m_Bits: 256
 --- !u!114 &8198392110458172879
 MonoBehaviour:
   m_ObjectHideFlags: 0

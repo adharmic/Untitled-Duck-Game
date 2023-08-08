@@ -9,12 +9,13 @@ public class CannonAction : BaseAction
     [SerializeField] private Transform cannonProjectilePrefab;
     [SerializeField] private Transform shootPoint;
     private GridPosition gridPosition;
-    private int maxShootDistance = 4;
+    [SerializeField] private int maxShootDistance = 4;
     private float stateTimer;
     private Vector3 targetPosition;
     private bool canShootBullet;
     [SerializeField] private float shootingTime = .1f;
     [SerializeField] private float cooldownTime = .5f;
+    [SerializeField] private LayerMask obstaclesLayerMask;
 
     private enum State {
         Aiming,
@@ -104,22 +105,16 @@ public class CannonAction : BaseAction
                     continue;
                 }
 
-                // if (!LevelGrid.Instance.HasAnyUnitOnGridPosition(testGridPosition)) {
-                //     continue;
-                // }
+                if (unitGridPosition == testGridPosition) {
+                    continue;
+                }
 
-                // Unit targetUnit = LevelGrid.Instance.GetUnitAtGridPosition(testGridPosition);
-                // if (targetUnit.IsEnemy() == unit.IsEnemy()) {
-                //     continue;
-                // }
-
-                // // TODO: Extract this code to Unit script to check if a unit can see another unit
-                // float unitShoulderHeight = 1.7f;
-                // Vector3 unitWorldPosition = LevelGrid.Instance.GetWorldPosition(unitGridPosition);
-                // Vector3 shootDirection = (targetUnit.GetWorldPosition() - unitWorldPosition).normalized;
-                // if (Physics.Raycast(unitWorldPosition + Vector3.up * unitShoulderHeight, shootDirection, Vector3.Distance(unitWorldPosition, targetUnit.GetWorldPosition()), obstaclesLayerMask)) {
-                //     continue;
-                // }
+                float unitShoulderHeight = 1.7f;
+                Vector3 unitWorldPosition = LevelGrid.Instance.GetWorldPosition(unitGridPosition);
+                Vector3 shootDirection = (LevelGrid.Instance.GetWorldPosition(testGridPosition) - unitWorldPosition).normalized;
+                if (Physics.Raycast(unitWorldPosition + Vector3.up * unitShoulderHeight, shootDirection, Vector3.Distance(unitWorldPosition, LevelGrid.Instance.GetWorldPosition(testGridPosition)), obstaclesLayerMask)) {
+                    continue;
+                }
 
                 validGridPositionList.Add(testGridPosition);
             }

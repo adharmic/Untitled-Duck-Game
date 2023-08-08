@@ -29,12 +29,15 @@ public class CannonProjectile : MonoBehaviour
 
         float reachedTargetDistance = .2f;
         if (Vector3.Distance(transform.position, targetPosition) < reachedTargetDistance) {
-            float damageRadius = 4f;
+            float damageRadius = 2f;
             Collider[] colliderArray = Physics.OverlapSphere(targetPosition, damageRadius);
             foreach (Collider collider in colliderArray) {
                 if (collider.TryGetComponent<Unit>(out Unit targetUnit)) {
                     // TODO: Damage based on distance from center
                     targetUnit.Damage(30);
+                }
+                if (collider.TryGetComponent<DestructibleCrate>(out DestructibleCrate destructibleCrate)) {
+                    destructibleCrate.Damage();
                 }
             }
             OnAnyCannonExploded?.Invoke(this, EventArgs.Empty);
