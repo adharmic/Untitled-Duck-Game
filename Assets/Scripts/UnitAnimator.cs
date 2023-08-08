@@ -62,4 +62,8 @@ public class UnitAnimator : MonoBehaviour
     private void Unit_OnDamage(object sender, EventArgs e) {
         animator.SetTrigger("Hurt");
     }
+
+    public Animator GetAnimator() {
+        return animator;
+    }
 }
