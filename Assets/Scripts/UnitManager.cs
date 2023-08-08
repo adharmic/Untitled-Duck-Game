@@ -47,6 +47,14 @@ public class UnitManager : MonoBehaviour
         else {
             friendlyUnitList.Remove(unit);
         }
+        // TODO: Game over!
+        if (friendlyUnitList.Count <= 0) {
+            Debug.Log("GAME OVER");
+        }
+        
+        if(UnitActionSystem.Instance.GetSelectedUnit() == unit) {
+            UnitActionSystem.Instance.SetSelectedUnit(friendlyUnitList[0]);
+        }
         unitList.Remove(unit);
 
     }

@@ -2408,6 +2408,11 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6183736854406308397, guid: 0ad0947a7b2f3974abeaf80db53d2b11,
+        type: 3}
+      propertyPath: actionPoints
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 6183736854406308398, guid: 0ad0947a7b2f3974abeaf80db53d2b11,
         type: 3}
       propertyPath: m_RootOrder
