@@ -11,6 +11,7 @@ public class CannonProjectile : MonoBehaviour
     [SerializeField] private Transform cannonExplodeVFXPrefab;
     [SerializeField] private TrailRenderer trailRenderer;
     [SerializeField] private AnimationCurve parabolaAnimationCurve;
+    [SerializeField] private float damageRadius = 2f;
 
     private float totalDistance;
     private Vector3 positionXZ;
@@ -29,7 +30,6 @@ public class CannonProjectile : MonoBehaviour
 
         float reachedTargetDistance = .2f;
         if (Vector3.Distance(transform.position, targetPosition) < reachedTargetDistance) {
-            float damageRadius = 2f;
             Collider[] colliderArray = Physics.OverlapSphere(targetPosition, damageRadius);
             foreach (Collider collider in colliderArray) {
                 if (collider.TryGetComponent<Unit>(out Unit targetUnit)) {
